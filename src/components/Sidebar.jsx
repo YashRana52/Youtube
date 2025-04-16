@@ -1,5 +1,6 @@
 import React from 'react';
 import { CiHome } from 'react-icons/ci';
+import { useNavigate } from 'react-router-dom';
 import { SiYoutubeshorts, SiYoutubemusic } from 'react-icons/si';
 import {
     MdSubscriptions,
@@ -12,11 +13,9 @@ import {
     MdHelpOutline,
     MdFeedback,
     MdDownload,
-
 } from 'react-icons/md';
-import { FaUserCircle, FaPaperclip, } from 'react-icons/fa';
+import { FaUserCircle, FaPaperclip } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import store from '@/utils/store';
 
 const sidebarSections = [
     {
@@ -56,11 +55,11 @@ const sidebarSections = [
         title: 'Your Subscriptions',
         items: [{ icon: <FaUserCircle size={22} />, label: 'Yash Rana' }],
     },
-
-
 ];
+
 function Sidebar() {
     const open = useSelector((store) => store.app.open);
+    const navigate = useNavigate();  // Initialize navigate
 
     return (
         <div
@@ -85,6 +84,12 @@ function Sidebar() {
                         {section.items.map((item, idx) => (
                             <div
                                 key={idx}
+                                onClick={() => {
+                                    // Navigate to Home page when Home icon is clicked
+                                    if (item.label === 'Home') {
+                                        navigate('/');
+                                    }
+                                }}
                                 className={`flex items-center gap-4 px-3 py-2 rounded-lg hover:bg-gray-100 cursor-pointer transition-all duration-200
                                             ${open ? "justify-start" : "justify-center"}`}
                             >
@@ -102,7 +107,5 @@ function Sidebar() {
         </div>
     );
 }
-
-
 
 export default Sidebar;
